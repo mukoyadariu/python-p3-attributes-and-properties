@@ -16,38 +16,30 @@ APPROVED_JOBS = [
 ]
 
 class Person:
-    def __init__(self, name="John", job="Purchasing"):
+    def __init__(self, name="john", job="Purchasing"):
         self._name = ""
         self._job = ""
 
-        self.name = name  # Utilize the property setters
-        self.job = job
+        self.set_name(name)
+        self.set_job(job)
 
-    @property
-    def name(self):
+    def get_name(self):
         return self._name
 
-    @name.setter
-    def name(self, name):
-        if isinstance(name, str) and 1 <= len(name) <= 25:
-            self._name = name.title()
-        else:
-            print("Name must be a string between 1 and 25 characters.")
-
-    @property
-    def job(self):
+    def get_job(self):
         return self._job
 
-    @job.setter
-    def job(self, job):
+    def set_name(self, name):
+        if (type(name) is str) and ((len(name) >= 1) and (len(name) <= 25 )):
+            self._name = name.title()
+        else:
+            print("Name must be string between 1 and 25 characters.")
+
+    def set_job(self, job):
         if job in APPROVED_JOBS:
             self._job = job
         else:
-            print("Job must be in the list of approved jobs.")
+            print("Job must be in list of approved jobs.")
 
-# Example usage
-person1 = Person("Alice", "Sales")
-print(person1.name)  # Output: Alice
-print(person1.job)   # Output: Sales
-
-person2 = Person("Bob", "Engineering")  # This will print the job error message
+    name = property(get_name, set_name,)
+    job = property(get_job, set_job,)
